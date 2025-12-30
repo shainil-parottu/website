@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Camera Accessing...</title>
+<style>
+body {
+  font-family: Arial; text-align: center;
+  background: #0f0f0f; color: white;
+}
+.loader {
+  border: 8px solid #444;
+  border-top: 8px solid #00ff00;
+  border-radius: 50%;
+  width: 60px; height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+#blurPreview {
+  width: 80%;
+  height: 200px;
+  background: url("https://images.unsplash.com/photo-1502980426475-b83966705988?auto=format&fit=crop&w=800&q=60") center/cover;
+  filter: blur(18px);
+  border-radius: 12px;
+  margin: 20px auto;
+  border: 2px solid #333;
+}
+</style>
+</head>
+<body>
+
+<h2>⚠️ Initializing Camera...</h2>
+<h3>Shainil is accessing your camera...</h3>
+<div class="loader"></div>
+<div id="blurPreview"></div>
+
+<!-- Shutter Sound -->
+<audio id="shutter">
+  <source src="https://actions.google.com/sounds/v1/camera/camera_shutter_click.ogg" type="audio/ogg">
+</audio>
+
+<script>
+setTimeout(function(){
+  document.getElementById("shutter").play();
+
+  document.body.innerHTML = `
+    <h2>📸 Image Captured Successfully!</h2>
+    <p>Camera accessed by <b>Shainil</b> ✔</p>
+    <img src="https://i.pinimg.com/564x/28/26/3c/28263ce44d75dd1938c1a25329f14a9f.jpg" width="300" style="border-radius:10px;">
+    <p style="margin-top:15px;">Thanks for the photo 😄</p>
+  `;
+}, 3500);
+</script>
+
+</body>
+</html>
