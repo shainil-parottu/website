@@ -6,37 +6,15 @@
 
 <style>
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Consolas', monospace;
   background: #000;
   color: #00ff88;
   text-align: center;
-  padding-top: 80px;
-  overflow: hidden;
-  position: relative;
+  padding-top: 60px;
 }
 
-/* 🔥 Hacker Background (Matrix Lines) */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image: linear-gradient(rgba(0,255,100,0.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0,255,100,0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  animation: gridMove 3s linear infinite;
-  z-index: -1;
-  filter: blur(1px);
-}
-
-@keyframes gridMove {
-  from {background-position: 0 0;}
-  to {background-position: 0 40px;}
-}
-
-/* Loader */
 .loader {
-  border: 5px solid #004400;
+  border: 5px solid #0a0a0a;
   border-top: 5px solid #00ff88;
   border-radius: 50%;
   width: 60px;
@@ -45,25 +23,43 @@ body::before {
   animation: spin 1s linear infinite;
   margin-bottom:20px;
 }
-@keyframes spin {100% { transform: rotate(360deg); }}
-
-/* 🔥 Fade + Slide animation for final image */
-.showImage {
-  animation: fadeInUp 1.3s ease forwards;
-  opacity: 0;
-}
-@keyframes fadeInUp {
-  0% { opacity: 0; transform: translateY(40px) scale(0.9); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-img {
+/* glowing hacker text */
+h2 {
+  color:#00ff88;
+  text-shadow:0 0 8px #00ff88, 0 0 15px #00ff88;
+}
+
+/* Image animation */
+.captureImage {
   width: 90%;
   max-width: 330px;
   border-radius: 10px;
-  margin-top: 20px;
-  border: 2px solid #00ff88;
-  box-shadow: 0 0 20px #00ff88aa;
+  animation: pop 0.8s ease forwards;
+  opacity: 0;
+}
+@keyframes pop {
+  0% { opacity:0; transform:scale(0.7); }
+  100% { opacity:1; transform:scale(1); }
+}
+
+#scanArea {
+  width:90%;
+  max-width:380px;
+  height:130px;
+  margin:20px auto;
+  padding:10px;
+  border:1px solid #00ff88;
+  border-radius:5px;
+  background:rgba(0, 255, 100, 0.05);
+  box-shadow:0 0 10px #00ff88;
+  text-align:left;
+  overflow:hidden;
+  font-size:12px;
 }
 </style>
 </head>
@@ -71,16 +67,17 @@ img {
 <body>
 
 <div class="loader"></div>
-<h2 id="loadingText">Shainil is Accessing your  camera<span id="dots"></span></h2>
+<h2>Accessing camera<span id="dots"></span></h2>
 <p>Wait a moment...</p>
 
-<!-- Camera sound -->
+<div id="scanArea"></div>
+
 <audio id="snapSound">
   <source src="https://www.soundjay.com/camera/sounds/camera-shutter-click-03.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Random images
+// 🔥 images to randomize from
 const images = [
  "https://i.pinimg.com/736x/4a/82/9b/4a829b4c2219f035c25f58ce8687c3dc.jpg",
  "https://i.pinimg.com/736x/32/7e/db/327edb9a15b304efc264668ada03f725.jpg",
@@ -90,27 +87,50 @@ const images = [
 ];
 const randomImage = images[Math.floor(Math.random() * images.length)];
 
-// Dots animation
+// 🔵 Dots animation
 let dotCount = 0;
 setInterval(()=>{
   dotCount = (dotCount % 3) + 1;
   document.getElementById("dots").textContent = ".".repeat(dotCount);
 }, 400);
 
-// Final switch screen
+// 💻 Hacker scanning lines
+const scanLines = [
+  "Initializing camera kernel...",
+  "Checking sensor output...",
+  "Decrypting resolution data...",
+  "Hacking camera stream...",
+  "connecting to NASA server...",
+  "Fetching ELON MUSK bank balance...",
+  "Stabilizing image...",
+  "Finalizing capture..."
+];
+const scan = document.getElementById("scanArea");
+let i = 0;
+const scanInterval = setInterval(()=>{
+  if(i < 20){
+    scan.textContent += scanLines[Math.floor(Math.random()*scanLines.length)] + "\n";
+    scan.scrollTop = scan.scrollHeight;
+    i++;
+  }
+}, 120);
+
+// 📸 Final transition
 setTimeout(() => {
+  clearInterval(scanInterval);
   document.getElementById("snapSound").play();
   document.body.innerHTML = `
-    <h2 style="color:#00ff88; text-shadow:0 0 10px #00ff88;">📸 Your Image Captured Successfully!</h2>
-    <img src="${randomImage}" class="showImage">
-    <p style="color:#00ff88; margin-top:15px;">Thanks for your beautiful image 😊</p>
+    <h2 style="color:#00ff88;text-shadow:0 0 10px #00ff88;">📸 Your Image Captured Successfully!</h2>
+    <img src="${randomImage}" class="captureImage">
+    <p style="margin-top:15px;color:#00ff88;">Thanks for your beautiful image 😊</p>
   `;
   document.body.style.background = "#000";
-}, 1920);
+}, 2000); // time delay
 </script>
 
 </body>
 </html>
+
 
 
 
