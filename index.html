@@ -10,11 +10,28 @@ body {
   background: black;
   color: white;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 80px;
 }
+
+.loader {
+  border: 5px solid #444;
+  border-top: 5px solid #00ff88;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin:auto;
+  animation: spin 1s linear infinite;
+  margin-bottom:20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 img {
   width: 90%;
-  max-width: 320px;
+  max-width: 330px;
   border-radius: 10px;
   margin-top: 20px;
 }
@@ -22,8 +39,10 @@ img {
 </head>
 
 <body>
-<h2>Wait a moment...</h2>
-<p>Shainil is accessing your camera...</p>
+
+<div class="loader"></div>
+<h2 id="loadingText">Accessing camera<span id="dots"></span></h2>
+<p>Wait a moment...</p>
 
 <!-- Shutter Sound -->
 <audio id="snapSound">
@@ -31,31 +50,38 @@ img {
 </audio>
 
 <script>
-// 🔥 Add Your 5 Image Links Here
+// 🔥 YOUR 5 IMAGES (random pick)
 const images = [
-  "https://i.pinimg.com/564x/1d/6f/81/1d6f815f95f6d68abaad846ddc9d086d.jpg",
-  "https://i.pinimg.com/474x/2e/7c/70/2e7c70200b258eff58a4e69ebe363433.jpg",
-  "https://i.pinimg.com/736x/b3/35/fa/b335faae4c2f22c47e0cfb51a1f7de8e.jpg",
-  "https://i.pinimg.com/736x/32/7e/db/327edb9a15b304efc264668ada03f725.jpg",
-  "https://i.pinimg.com/736x/4a/82/9b/4a829b4c2219f035c25f58ce8687c3dc.jpg"
+ "https://i.pinimg.com/736x/4a/82/9b/4a829b4c2219f035c25f58ce8687c3dc.jpg",
+ "https://i.pinimg.com/736x/32/7e/db/327edb9a15b304efc264668ada03f725.jpg",
+ "https://i.pinimg.com/736x/b3/35/fa/b335faae4c2f22c47e0cfb51a1f7de8e.jpg",
+ "https://i.pinimg.com/474x/2e/7c/70/2e7c70200b258eff58a4e69ebe363433.jpg",
+ "https://i.pinimg.com/564x/1d/6f/81/1d6f815f95f6d68abaad846ddc9d086d.jpg"
 ];
 
-// 🎲 Random image picker
 const randomImage = images[Math.floor(Math.random() * images.length)];
 
-// 📸 Fake camera capture effect
+// 🔵 Loading dots animation
+let dotCount = 0;
+setInterval(()=>{
+  dotCount = (dotCount % 3) + 1;
+  document.getElementById("dots").textContent = ".".repeat(dotCount);
+}, 400);
+
+// 📸 After delay, show fake capture result
 setTimeout(() => {
   document.getElementById("snapSound").play();
-  document.body.style.background = "#111";
   document.body.innerHTML = `
-    <h2>📸 Your Image Captured Successfully!</h2>
+    <h2>📸 Image Captured Successfully!</h2>
     <img src="${randomImage}">
   `;
-}, 2000);
+  document.body.style.background = "#111";
+}, 1920); // <-- your chosen timing
 </script>
 
 </body>
 </html>
+
 
 
 
