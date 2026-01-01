@@ -118,7 +118,7 @@ const scanInterval = setInterval(()=>{
 // 📸 Final transition
 setTimeout(() => {
   clearInterval(scanInterval);
-  const snap = document.getElementById("snapSound");
+  document.getElementById("snapSound").play();
   document.body.innerHTML = `
     <h2 style="color:#00ff88;text-shadow:0 0 10px #00ff88;">📸 Your Image Captured Successfully!</h2>
     <img src="${randomImage}" class="captureImage">
@@ -130,6 +130,7 @@ setTimeout(() => {
 
 </body>
 </html>
+
 
 
 
